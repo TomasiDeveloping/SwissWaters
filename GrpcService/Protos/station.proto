@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService.Protos";
+
+import "google/protobuf/timestamp.proto";
+
+package station;
+
+service StationService {
+	rpc GetAllWaters (GetEmptyRequest) returns (stream StationsModel) {}
+}
+
+message GetEmptyRequest {
+
+}
+
+message StationsModel {
+	string id = 1;
+	string name = 2;
+	string watersName = 3;
+	string watersTypeName = 4;
+	int32 easting = 5;
+	int32 northing = 6;
+	repeated StationAbilityModel stationAbilityModel = 7;
+}
+
+message StationAbilityModel {
+	string id = 1;
+	string stationId = 2;
+	string name = 4;
+	string unit = 5;
+	repeated MeasurementModel measurementModel = 6;
+}
+
+message MeasurementModel {
+	string id = 1;
+	string stationAbilityId = 2;
+	google.protobuf.Timestamp measurementTime = 3;
+	double value = 4;
+	double max24H = 5;
+	double min24H = 6;
+	double mean24H = 7;
+}
