@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcService", "GrpcService\GrpcService.csproj", "{8A6D9B9C-AD29-4147-B7DE-18D274B43CA0}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Client", "Client\Client.esproj", "{13FF0030-BBD3-44C9-819A-4EDCDEBD6D6E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +33,6 @@ Global
 		{8A6D9B9C-AD29-4147-B7DE-18D274B43CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A6D9B9C-AD29-4147-B7DE-18D274B43CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A6D9B9C-AD29-4147-B7DE-18D274B43CA0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13FF0030-BBD3-44C9-819A-4EDCDEBD6D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13FF0030-BBD3-44C9-819A-4EDCDEBD6D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13FF0030-BBD3-44C9-819A-4EDCDEBD6D6E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{13FF0030-BBD3-44C9-819A-4EDCDEBD6D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13FF0030-BBD3-44C9-819A-4EDCDEBD6D6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13FF0030-BBD3-44C9-819A-4EDCDEBD6D6E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
