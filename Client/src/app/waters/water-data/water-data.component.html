@@ -1,0 +1,22 @@
+<div *ngIf="waterData">
+  <h4>Gewässer Daten</h4>
+  <div class="card mb-5">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{waterData.imageUrl}}" class="img-fluid rounded-start" alt="{{waterData.waterName}}">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{waterData.waterName}}</h5>
+          <p><small class="mb-5">{{waterData.description}}</small></p>
+          <div>
+            <p class="card-text">Höhe über Meeresspiegel: <b>{{waterData.altitudeAboveSeaLevel ? waterData.altitudeAboveSeaLevel + ' m.ü.M' : '-'}}</b></p>
+            <p class="card-text">Fläche: <b>{{waterData.area ? waterData.area + ' km²' : '-'}}</b></p>
+            <p class="card-text">Volumen: <b>{{waterData.volume ? waterData.volume + ' km³' : '-'}}</b></p>
+            <p class="card-text">Maximale Tiefe: <b>{{waterData.maximumDepth ? waterData.maximumDepth + ' m' : '-'}}</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
