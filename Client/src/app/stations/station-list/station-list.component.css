@@ -36,3 +36,6 @@
   flex-direction: row;
   align-items: baseline;
 }
+.text-small {
+  font-size: .8rem;
+}

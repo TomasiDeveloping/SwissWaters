@@ -89,7 +89,7 @@ public class FederalOfficeForTheEnvironment
         var waterTypeId = await GetOrCreateWatersType(watersTypeName);
         if (string.IsNullOrEmpty(watersName) || string.IsNullOrEmpty(name))
             throw new ArgumentException("name or water-body-name is empty");
-        var stationDto = await _stationRepository.GetStationByNameAsync(name, watersName);
+        var stationDto = await _stationRepository.GetStationByNameAndWatersNameAsync(name, watersName);
         if (stationDto != null) return stationDto;
 
         var easting = xmlStation.Attributes?["easting"]?.Value;

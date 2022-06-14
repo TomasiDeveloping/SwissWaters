@@ -1,4 +1,4 @@
-import {Measurement} from "./measurement.mode";
+import {Measurement} from "./measurement.model";
 
 export interface StationAbility {
   id: string;

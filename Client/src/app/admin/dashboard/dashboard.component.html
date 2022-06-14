@@ -1,0 +1,22 @@
+<div class="container">
+  <h1 class="text-center">Admin - Dashboard</h1>
+
+  <select (change)="onStationChange($event)" class="form-control" name="selectAction">
+    <option value="0"></option>
+    <option *ngFor="let station of stations" [value]="station.id">
+      {{station.name}} - {{station.watersName}} |
+      <p *ngFor="let name of station.cantonNames">{{name}}</p>
+    </option>
+  </select>
+
+  <select (change)="onCantonChange($event)" class="form-control" name="selectAction">
+    <option value="0"></option>
+    <option *ngFor="let canton of cantons" [value]="canton.id">
+      {{canton.name}}
+    </option>
+  </select>
+
+  <button class="btn btn-primary" (click)="onAddCantonStation()">Save</button>
+  <p>{{selectedWaters}}</p>
+
+</div>

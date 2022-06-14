@@ -24,7 +24,7 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SensorAbilities",
+                name: "StationAbilities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -60,7 +60,7 @@ namespace Database.Migrations
                     table.ForeignKey(
                         name: "FK_Measurements_SensorAbilities_StationAbilityId",
                         column: x => x.StationAbilityId,
-                        principalTable: "SensorAbilities",
+                        principalTable: "StationAbilities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -72,7 +72,7 @@ namespace Database.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_SensorAbilities_StationId",
-                table: "SensorAbilities",
+                table: "StationAbilities",
                 column: "StationId");
         }
 
@@ -82,7 +82,7 @@ namespace Database.Migrations
                 name: "Measurements");
 
             migrationBuilder.DropTable(
-                name: "SensorAbilities");
+                name: "StationAbilities");
 
             migrationBuilder.DropTable(
                 name: "Stations");

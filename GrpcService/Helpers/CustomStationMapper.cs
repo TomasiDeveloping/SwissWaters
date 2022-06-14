@@ -8,7 +8,7 @@ public class CustomStationMapper : ICustomStationMapper
 {
     public StationsModel MapFromStationDto(StationDto stationDto)
     {
-        var stationAbilityModels = (from stationAbility in stationDto.SensorAbilities
+        var stationAbilityModels = (from stationAbility in stationDto.StationAbilities
             let measurementModels = stationAbility.Measurements.Select(measurement => new MeasurementModel
                 {
                     Id = measurement.Id.ToString(),

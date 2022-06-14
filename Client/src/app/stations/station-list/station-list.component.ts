@@ -41,6 +41,11 @@ export class StationListComponent implements OnInit {
       next: ((response) => {
         this.stations = response;
         this.filteredStations = response;
+        response.forEach(r => {
+          if (r.stationAbilities.length <= 0) {
+            console.log(r.watersName + ' -' + r.name)
+          }
+        })
         this.currentWaterCount = response.length;
         if (this.session) {
           this.filterWaters();
@@ -92,7 +97,7 @@ export class StationListComponent implements OnInit {
   filterWaters() {
     let cantonList = this.cantons.filter(c => c.selected);
     this.stations = this.filteredStations.filter((w) => {
-        return cantonList.find((x) => (w.cantonName.indexOf(x.name) > -1));
+        return cantonList.find((x) => (w.cantonNames.indexOf(x.name) > -1));
       }
     )
     this.currentWaterCount = this.stations.length;
@@ -103,11 +108,11 @@ export class StationListComponent implements OnInit {
     this.router.navigate(["details", station.id]).then();
   }
 
-  addToFavorite(id: number) {
+  addToFavorite(id: string) {
     const userFavorites = localStorage.getItem('userFavorites');
     if (userFavorites) {
       this.userFavorites = JSON.parse(userFavorites);
-      if (this.userFavorites.includes(id.toString())) {
+      if (this.userFavorites.includes(id)) {
         return;
       }
       this.userFavorites.push(id.toString());
@@ -118,17 +123,17 @@ export class StationListComponent implements OnInit {
     localStorage.setItem('userFavorites', JSON.stringify(this.userFavorites));
   }
 
-  removeFavorite(id: number) {
+  removeFavorite(id: string) {
     const userFavorites = localStorage.getItem('userFavorites');
     if (userFavorites) {
       this.userFavorites = JSON.parse(userFavorites);
-      this.userFavorites = this.userFavorites.filter(f => f !== id.toString())
+      this.userFavorites = this.userFavorites.filter(f => f !== id)
       localStorage.setItem('userFavorites', JSON.stringify(this.userFavorites));
     }
   }
 
-  checkFavorite(waterId: number) {
-    return !this.userFavorites.includes(waterId.toString());
+  checkFavorite(waterId: string) {
+    return !this.userFavorites.includes(waterId);
   }
 
   onlyFavorite(event: any) {

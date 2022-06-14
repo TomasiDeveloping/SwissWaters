@@ -27,6 +27,7 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Services.AddCors();
 
     builder.Services.AddDbContext<SwissWatersContext>(options =>
     {
@@ -42,6 +43,8 @@ try
     builder.Services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
     builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<ICantonRepository, CantonRepository>();
+    builder.Services.AddScoped<ICantonStationRepository, CantonStationRepository>();
 
     builder.Services.ConfigureAndAddAuthentication();
 
@@ -61,6 +64,13 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+
+    app.UseCors(options =>
+    {
+        options.AllowAnyOrigin();
+        options.AllowAnyMethod();
+        options.AllowAnyHeader();
+    });
 
     app.UseHttpsRedirection();
 

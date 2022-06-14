@@ -7,6 +7,6 @@ export interface Station {
   watersTypeName: string;
   easting: number;
   northing: number;
-  cantonName: string[];
+  cantonNames: string[];
   stationAbilities: StationAbility[];
 }

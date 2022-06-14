@@ -12,12 +12,14 @@ public class SwissWatersContext : DbContext
     public DbSet<Station> Stations { get; set; }
 
     public DbSet<WatersType> WatersTypes { get; set; }
-    public DbSet<StationAbility> SensorAbilities { get; set; }
+    public DbSet<StationAbility> StationAbilities { get; set; }
     public DbSet<Measurement> Measurements { get; set; }
 
     public DbSet<ApiUser> ApiUsers { get; set; }
 
     public DbSet<UserClaim> UserClaims { get; set; }
+    public DbSet<Canton> Cantons { get; set; }
+    public DbSet<CantonStation> CantonStations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -44,7 +46,7 @@ public class SwissWatersContext : DbContext
         modelBuilder.Entity<StationAbility>().Property(sa => sa.Unit).IsRequired().HasMaxLength(50);
         modelBuilder.Entity<StationAbility>()
             .HasOne(sa => sa.Station)
-            .WithMany(sa => sa.SensorAbilities)
+            .WithMany(sa => sa.StationAbilities)
             .HasForeignKey(s => s.StationId)
             .OnDelete(DeleteBehavior.NoAction);
 
@@ -66,5 +68,9 @@ public class SwissWatersContext : DbContext
             .WithMany(uc => uc.UserClaims)
             .HasForeignKey(uc => uc.ApiUserId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.ApplyConfiguration(new CantonConfigurations());
+
+        modelBuilder.ApplyConfiguration(new CantonStationConfigurations());
     }
 }

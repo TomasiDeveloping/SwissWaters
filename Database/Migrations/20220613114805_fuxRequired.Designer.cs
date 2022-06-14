@@ -138,7 +138,7 @@ namespace Database.Migrations
 
                     b.HasIndex("StationId");
 
-                    b.ToTable("SensorAbilities");
+                    b.ToTable("StationAbilities");
                 });
 
             modelBuilder.Entity("Database.Entities.UserClaim", b =>
@@ -228,7 +228,7 @@ namespace Database.Migrations
             modelBuilder.Entity("Database.Entities.StationAbility", b =>
                 {
                     b.HasOne("Database.Entities.Station", "Station")
-                        .WithMany("SensorAbilities")
+                        .WithMany("StationAbilities")
                         .HasForeignKey("StationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -254,7 +254,7 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Entities.Station", b =>
                 {
-                    b.Navigation("SensorAbilities");
+                    b.Navigation("StationAbilities");
                 });
 
             modelBuilder.Entity("Database.Entities.StationAbility", b =>

@@ -20,7 +20,7 @@ public class StationAbilityRepository : IStationAbilityRepository
 
     public async Task<StationAbility?> GetStationAbilityByStationIdAsync(Guid stationsId)
     {
-        var stationAbility = await _context.SensorAbilities.FirstOrDefaultAsync(sa => sa.Id == stationsId);
+        var stationAbility = await _context.StationAbilities.FirstOrDefaultAsync(sa => sa.Id == stationsId);
         return stationAbility;
     }
 
@@ -28,7 +28,7 @@ public class StationAbilityRepository : IStationAbilityRepository
         Guid stationId)
     {
         var stationAbility =
-            await _context.SensorAbilities.FirstOrDefaultAsync(sa =>
+            await _context.StationAbilities.FirstOrDefaultAsync(sa =>
                 sa.Name.Contains(stationAbilityName) && sa.StationId == stationId);
         return stationAbility == null ? null : _mapper.Map<StationAbilityDto>(stationAbility);
     }
@@ -36,7 +36,7 @@ public class StationAbilityRepository : IStationAbilityRepository
     public async Task<StationAbilityDto> InsertStationAbilityAsync(StationAbilityDto stationAbilityDto)
     {
         var stationAbility = _mapper.Map<StationAbility>(stationAbilityDto);
-        await _context.SensorAbilities.AddAsync(stationAbility);
+        await _context.StationAbilities.AddAsync(stationAbility);
         await _context.SaveChangesAsync();
         return _mapper.Map<StationAbilityDto>(stationAbility);
     }

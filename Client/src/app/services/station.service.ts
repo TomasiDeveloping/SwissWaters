@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Station} from "../models/station.model";
 
@@ -9,12 +9,16 @@ import {Station} from "../models/station.model";
 })
 export class StationService {
 
-  private readonly apiUrl = environment.apiUrl + 'waters/';
+  private readonly apiUrl = environment.apiUrl + 'stations/';
 
   constructor(private http: HttpClient) { }
 
   getCurrentStationsData(): Observable<Station[]> {
-    return this.http.get<Station[]>(this.apiUrl + 'GetCurrentStationsData')
+    return this.http.get<Station[]>(this.apiUrl + 'GetLatestMeasurements')
+  }
+
+  getStationsWhitCantonsOnly(): Observable<Station[]> {
+    return this.http.get<Station[]>(this.apiUrl);
   }
 
   getStationById(stationId: string): Observable<Station> {
