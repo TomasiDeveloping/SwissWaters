@@ -14,13 +14,16 @@ import { StationListComponent } from './stations/station-list/station-list.compo
 import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { StationDetailComponent } from './stations/station-detail/station-detail.component';
+import {ApiKeyInterceptor} from "./interceptors/api-key.interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     StationListComponent,
-    DashboardComponent
+    DashboardComponent,
+    StationDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
     FormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

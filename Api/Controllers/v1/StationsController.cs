@@ -1,8 +1,10 @@
 ﻿using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+[Authorize]
 [ApiVersion("1.0")]
 [Route("api/v{v:apiVersion}/[controller]")]
 [ApiController]
