@@ -1,0 +1,6 @@
+.custom-menu {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+  margin-left: 5px;
+}

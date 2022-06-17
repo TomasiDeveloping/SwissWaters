@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Station} from "../../models/station.model";
 import {ChartConfiguration, ChartType} from "chart.js";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -6,6 +6,7 @@ import {StationService} from "../../services/station.service";
 import {StationAbility} from "../../models/stationAbility.model";
 import 'chartjs-adapter-date-fns';
 import {de} from 'date-fns/locale';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -48,7 +49,7 @@ export class StationDetailComponent implements OnInit {
     scales: {
       x: {
         adapters: {
-          date: { locale: de}
+          date: {locale: de}
         },
         type: "time",
         time: {
@@ -83,8 +84,10 @@ export class StationDetailComponent implements OnInit {
     ],
     labels: []
   };
+
   constructor(private readonly route: ActivatedRoute,
-  private readonly stationService: StationService,) { }
+              private readonly stationService: StationService,) {
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.stationId = params['id']);
@@ -95,9 +98,6 @@ export class StationDetailComponent implements OnInit {
     this.stationService.getStationById(stationId).subscribe({
       next: ((response) => {
         this.currentStation = response;
-        // if (response.watersTypeName === 'See') {
-        //   this.getWaterData(response.id);
-        // }
         const temperatureAbility = response.stationAbilities.find(s => s.name.includes("Wassertemperatur"));
         if (temperatureAbility) {
           this.waterTemperatures = temperatureAbility;
@@ -106,24 +106,10 @@ export class StationDetailComponent implements OnInit {
             this.lineChartData.labels?.unshift(new Date(m.measurementTime));
           })
         }
-        // response.measurements.forEach((m) => {
-        //   this.lineChartData.datasets[0].data.unshift(m.temperature);
-        //   this.lineChartData.labels?.unshift(new Date(m.measurementTime).toLocaleDateString('de-DE'))
-        // }
-        // );
       }),
       error: (error) => {
-        console.log(error);
+        Swal.fire('Get Waters Detail', error.error || 'Unknown Error!', 'error').then()
       }
     });
   }
-
-  // getWaterData(waterDataId: string) {
-  //   this.waterDataService.getWaterDataById(waterDataId).subscribe({
-  //     next: ((response) => {
-  //       this.waterData = response;
-  //     })
-  //   });
-  // }
-
 }

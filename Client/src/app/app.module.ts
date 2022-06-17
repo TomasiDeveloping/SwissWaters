@@ -16,6 +16,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { StationDetailComponent } from './stations/station-detail/station-detail.component';
 import {ApiKeyInterceptor} from "./interceptors/api-key.interceptor";
+import { FooterComponent } from './footer/footer.component';
+import { AccountComponent } from './account/account.component';
+import { DocumentationComponent } from './documentation/documentation.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import {ApiKeyInterceptor} from "./interceptors/api-key.interceptor";
     HomeComponent,
     StationListComponent,
     DashboardComponent,
-    StationDetailComponent
+    StationDetailComponent,
+    FooterComponent,
+    AccountComponent,
+    DocumentationComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +40,7 @@ import {ApiKeyInterceptor} from "./interceptors/api-key.interceptor";
     NgxScrollTopModule,
     NgxSpinnerModule,
     NgChartsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},

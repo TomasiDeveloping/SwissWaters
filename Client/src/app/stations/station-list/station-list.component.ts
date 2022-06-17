@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Station} from "../../models/station.model";
 import {StationService} from "../../services/station.service";
 import {Router} from "@angular/router";
 import {CantonService} from "../../services/canton.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-station-list',
@@ -19,7 +20,10 @@ export class StationListComponent implements OnInit {
   session = false;
   userFavorites: string[] = [];
 
-  constructor(private readonly stationService: StationService, private readonly router: Router, private readonly cantonService: CantonService) { }
+  constructor(private readonly stationService: StationService,
+              private readonly router: Router,
+              private readonly cantonService: CantonService) {
+  }
 
   ngOnInit(): void {
     const checkUserFavorites = localStorage.getItem('userFavorites');
@@ -41,18 +45,13 @@ export class StationListComponent implements OnInit {
       next: ((response) => {
         this.stations = response;
         this.filteredStations = response;
-        response.forEach(r => {
-          if (r.stationAbilities.length <= 0) {
-            console.log(r.watersName + ' -' + r.name)
-          }
-        })
         this.currentWaterCount = response.length;
         if (this.session) {
           this.filterWaters();
         }
       }),
       error: (error) => {
-        console.log(error);
+        Swal.fire('Load Waters Data', error.error || 'Unknown error!', 'error').then();
       }
     });
   }
@@ -69,7 +68,7 @@ export class StationListComponent implements OnInit {
         })
       }),
       error: (error) => {
-        console.log(error);
+        Swal.fire('Load Cantons', error.error || 'Unknown error!', 'error').then();
       }
     });
   }

@@ -1,0 +1,11 @@
+.footer-container {
+  height: 5rem;
+  background-color: #d6b7b7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+a {
+  text-decoration: none;
+  color: #5e2121;
+}
