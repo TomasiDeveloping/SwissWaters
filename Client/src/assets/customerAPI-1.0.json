@@ -1,15 +1,23 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Swiss Waters Api",
-    "version": "1.0"
+    "title": "Swiss Waters API",
+    "description": "API for Swiss waters data",
+    "contact": {
+      "name": "Tomasi-Developing",
+      "url": "https://www.tomasi-developing.ch",
+      "email": "info@tomasi-developing.ch"
+    },
+    "version": "v1"
   },
+  "servers": [{"url": "https://swisswaters.azurewebsites.net/"}],
   "paths": {
-    "/api/v{v}/Stations": {
+    "/api/v{v}/Status": {
       "get": {
         "tags": [
-          "Stations"
+          "Status"
         ],
+        "summary": "Check status of the API",
         "parameters": [
           {
             "name": "v",
@@ -22,7 +30,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Returns a string",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -32,10 +60,12 @@
         "tags": [
           "Stations"
         ],
+        "summary": "Get a station by id (Auth)",
         "parameters": [
           {
             "name": "stationId",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string"
@@ -44,6 +74,7 @@
           {
             "name": "dayIncluded",
             "in": "query",
+            "description": "",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -61,7 +92,33 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Returns the station",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StationDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -71,6 +128,7 @@
         "tags": [
           "Stations"
         ],
+        "summary": "Get Current measured values (Auth)",
         "parameters": [
           {
             "name": "v",
@@ -83,7 +141,26 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Returns a list with all stations and the current measured values",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StationDto"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -93,10 +170,12 @@
         "tags": [
           "Stations"
         ],
+        "summary": "Get all stations by canton code (Auth)",
         "parameters": [
           {
             "name": "cantonCode",
             "in": "query",
+            "description": "",
             "schema": {
               "type": "string"
             }
@@ -104,6 +183,7 @@
           {
             "name": "dayIncluded",
             "in": "query",
+            "description": "",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -121,7 +201,42 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Returns a list with all stations for the canton code",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StationDto"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -131,10 +246,12 @@
         "tags": [
           "Stations"
         ],
+        "summary": "Get all Stations by canton name (Auth)",
         "parameters": [
           {
             "name": "cantonName",
             "in": "query",
+            "description": "",
             "schema": {
               "type": "string"
             }
@@ -142,6 +259,7 @@
           {
             "name": "dayIncluded",
             "in": "query",
+            "description": "",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -159,32 +277,172 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/v{v}/Status": {
-      "get": {
-        "tags": [
-          "Status"
-        ],
-        "parameters": [
-          {
-            "name": "v",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
+            "description": "Returns a list with all stations for the canton name",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StationDto"
+                  }
+                }
+              }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     }
-  }
+  },
+  "components": {
+    "schemas": {
+      "MeasurementDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "stationAbilityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "measurementTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "max24H": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "mean24H": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "min24H": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StationAbilityDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "stationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "measurements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeasurementDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "watersName": {
+            "type": "string",
+            "nullable": true
+          },
+          "watersTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "easting": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "northing": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cantonNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "stationAbilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StationAbilityDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "description": "ApiKey must appear in header",
+        "name": "XApiKey",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKey": [ ]
+    }
+  ]
 }

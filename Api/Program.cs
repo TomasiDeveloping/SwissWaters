@@ -26,7 +26,6 @@ try
     // Add services to the container.
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
     builder.Services.AddCors();
 
     builder.Services.AddDbContext<SwissWatersContext>(options =>
@@ -47,6 +46,7 @@ try
     builder.Services.AddScoped<ICantonStationRepository, CantonStationRepository>();
 
     builder.Services.ConfigureAndAddAuthentication();
+    builder.Services.ConfigureAndAddSwagger();
 
     builder.Services.AddApiVersioning(options =>
     {

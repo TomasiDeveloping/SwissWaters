@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers.v1;
 
@@ -15,6 +16,12 @@ public class StatusController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Check status of the API
+    /// </summary>
+    /// <response code="200">Returns a string</response>
+    [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(string))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest)]
     [AllowAnonymous]
     [HttpGet]
     public IActionResult Get()

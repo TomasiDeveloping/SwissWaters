@@ -1,6 +1,10 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
 using AspNetCore.Authentication.ApiKey;
 using Core.Interfaces;
+using Database.Data;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Api.Extensions;
 
@@ -81,5 +85,53 @@ public static class ServiceExtensions
                     }
                 };
             });
+    }
+
+    public static void ConfigureAndAddSwagger(this IServiceCollection service)
+    {
+        service.AddSwaggerGen(c =>
+        {
+            // Set the comments path for the XmlComments file.
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            c.IncludeXmlComments(xmlPath);
+            c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Swiss Waters API", 
+                Version = "v1",
+                Description = "API for Swiss waters data",
+                Contact = new OpenApiContact()
+                {
+                    Name = "Tomasi-Developing",
+                    Email = "info@tomasi-developing.ch",
+                    Url = new Uri("https://www.tomasi-developing.ch")
+                }
+            });
+            c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+            {
+                Description = "ApiKey must appear in header",
+                Type = SecuritySchemeType.ApiKey,
+                Name = "XApiKey",
+                In = ParameterLocation.Header,
+                Scheme = "ApiKeyScheme"
+            });
+            var key = new OpenApiSecurityScheme()
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                },
+                In = ParameterLocation.Header
+            };
+            var requirement = new OpenApiSecurityRequirement
+            {
+                { key, new List<string>() }
+            };
+            c.AddSecurityRequirement(requirement);
+     
+        });
     }
 }
