@@ -19,5 +19,8 @@ public class AutoMapperConfig : Profile
         CreateMap<StationAbility, StationAbilityDto>().ReverseMap();
 
         CreateMap<Canton, CantonDto>();
+
+        CreateMap<ApiUser, ApiUserDto>();
+
     }
 }

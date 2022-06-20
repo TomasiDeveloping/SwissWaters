@@ -57,6 +57,8 @@ public class SwissWatersContext : DbContext
         modelBuilder.Entity<Measurement>().Property(m => m.Mean24H).IsRequired(false).HasPrecision(18, 3);
 
         modelBuilder.Entity<ApiUser>().HasKey(au => au.Id);
+        modelBuilder.Entity<ApiUser>().Property(au => au.Salt).IsRequired(false);
+        modelBuilder.Entity<ApiUser>().Property(au => au.Password).IsRequired(false);
         modelBuilder.Entity<ApiUser>().Property(au => au.Email).IsRequired().HasMaxLength(155);
         modelBuilder.Entity<ApiUser>().Property(au => au.ApiKey).IsRequired();
         modelBuilder.Entity<ApiUser>().Property(au => au.OwnerName).IsRequired().HasMaxLength(150);

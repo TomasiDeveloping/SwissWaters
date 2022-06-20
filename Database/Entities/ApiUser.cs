@@ -6,5 +6,7 @@ public class ApiUser
     public string Email { get; set; }
     public string ApiKey { get; set; }
     public string OwnerName { get; set; }
+    public byte[]? Password { get; set; }
+    public byte[]? Salt { get; set; }
     public ICollection<UserClaim> UserClaims { get; set; }
 }

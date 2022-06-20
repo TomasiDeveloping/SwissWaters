@@ -1,4 +1,6 @@
-﻿using Core.DataTransferObjects;
+﻿using AutoMapper;
+using Core.DataTransferObjects;
+using Core.Helper;
 using Core.Interfaces;
 using Database.Data;
 using Database.Entities;
@@ -9,28 +11,33 @@ namespace Core.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly IApiKeyService _apiKeyService;
+    private readonly IMapper _mapper;
     private readonly SwissWatersContext _context;
 
-    public UserRepository(SwissWatersContext context, IApiKeyService apiKeyService)
+    public UserRepository(SwissWatersContext context, IApiKeyService apiKeyService, IMapper mapper)
     {
         _context = context;
         _apiKeyService = apiKeyService;
+        _mapper = mapper;
     }
 
-    public async Task<string> CreateApiUserAsync(CreateUserDto createUserDto)
+    public async Task<ApiUserDto> CreateApiUserAsync(CreateUserDto createUserDto)
     {
+        var password = PasswordService.CreateNewPassword(createUserDto.Password);
         var user = new ApiUser
         {
             Id = Guid.NewGuid(),
             Email = createUserDto.Email,
             OwnerName = $"{createUserDto.FirstName} - {createUserDto.LastName}",
             ApiKey = _apiKeyService.GenerateApiKey(),
-            UserClaims = new List<UserClaim> {new() {Name = "Customer"}}
+            UserClaims = new List<UserClaim> {new() {Name = "Customer"}},
+            Password = password.PasswordHash,
+            Salt = password.PasswordSalt
         };
 
         await _context.ApiUsers.AddAsync(user);
         await _context.SaveChangesAsync();
-        return user.ApiKey;
+        return _mapper.Map<ApiUserDto>(user);
     }
 
     public async Task<ApiUser?> GetApiUserByApiKeyAsync(string apiKey)
@@ -39,5 +46,12 @@ public class UserRepository : IUserRepository
             .Include(u => u.UserClaims)
             .FirstOrDefaultAsync(u => u.ApiKey == apiKey);
         return apiUser;
+    }
+
+    public async Task<ApiUser?> GetUserForLoginByEmailAsync(string email)
+    {
+        return await _context.ApiUsers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(au => au.Email.Equals(email));
     }
 }

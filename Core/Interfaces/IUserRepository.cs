@@ -5,6 +5,7 @@ namespace Core.Interfaces;
 
 public interface IUserRepository
 {
-    Task<string> CreateApiUserAsync(CreateUserDto createUserDto);
+    Task<ApiUserDto> CreateApiUserAsync(CreateUserDto createUserDto);
     Task<ApiUser?> GetApiUserByApiKeyAsync(string apiKey);
+    Task<ApiUser?> GetUserForLoginByEmailAsync(string email);
 }
