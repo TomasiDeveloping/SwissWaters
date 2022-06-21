@@ -6,12 +6,15 @@ import {DashboardComponent} from "../admin/dashboard/dashboard.component";
 import {StationDetailComponent} from "../stations/station-detail/station-detail.component";
 import {AccountComponent} from "../account/account.component";
 import {DocumentationComponent} from "../documentation/documentation.component";
+import {LoginComponent} from "../auth/login/login.component";
+import {AuthGuard} from "../guards/auth.guard";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'details/:id', component: StationDetailComponent},
-  {path: 'admin', component: DashboardComponent},
-  {path: 'account', component: AccountComponent},
+  //{path: 'admin', component: DashboardComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'documentation', component: DocumentationComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];

@@ -11,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import { StationListComponent } from './stations/station-list/station-list.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { StationDetailComponent } from './stations/station-detail/station-detail.component';
@@ -19,6 +19,7 @@ import {ApiKeyInterceptor} from "./interceptors/api-key.interceptor";
 import { FooterComponent } from './footer/footer.component';
 import { AccountComponent } from './account/account.component';
 import { DocumentationComponent } from './documentation/documentation.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,19 +30,21 @@ import { DocumentationComponent } from './documentation/documentation.component'
     StationDetailComponent,
     FooterComponent,
     AccountComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRouterModule,
-    Ng2SearchPipeModule,
-    NgxScrollTopModule,
-    NgxSpinnerModule,
-    NgChartsModule,
-    FormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        AppRouterModule,
+        Ng2SearchPipeModule,
+        NgxScrollTopModule,
+        NgxSpinnerModule,
+        NgChartsModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true}

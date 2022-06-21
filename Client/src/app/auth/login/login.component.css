@@ -1,0 +1,13 @@
+#register {
+  margin-top: 20px;
+}
+
+.forgotPassword {
+  color: #29abe0;
+  cursor: pointer;
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+}
+
