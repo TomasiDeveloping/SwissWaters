@@ -18,10 +18,10 @@
     <tbody>
     <tr *ngFor="let stationAbility of currentStation.stationAbilities">
       <td>{{stationAbility.name}}</td>
-      <td>{{stationAbility.measurements[0].value}} {{stationAbility.unit}}</td>
-      <td>{{stationAbility.measurements[0].mean24H}} {{stationAbility.unit}}</td>
-      <td>{{stationAbility.measurements[0].max24H}} {{stationAbility.unit}}</td>
-      <td>{{stationAbility.measurements[0].min24H}} {{stationAbility.unit}}</td>
+      <td>{{stationAbility.measurements[0]?.value ? stationAbility.measurements[0].value + stationAbility.unit : '-'}}</td>
+      <td>{{stationAbility.measurements[0]?.mean24H ? stationAbility.measurements[0].mean24H + stationAbility.unit : '-'}}</td>
+      <td>{{stationAbility.measurements[0]?.max24H ? stationAbility.measurements[0].max24H + stationAbility.unit : '-'}}</td>
+      <td>{{stationAbility.measurements[0]?.min24H ? stationAbility.measurements[0].min24H + stationAbility.unit : '-'}}</td>
     </tr>
     </tbody>
   </table>
