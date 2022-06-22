@@ -44,7 +44,7 @@
                                        class="badge rounded-pill bg-secondary me-2 px-3 py-2">{{name}}</span></h6>
     </div>
     <div class="card-body">
-      <h5 class="card-title">{{station.name.length > 2 ? station.name + ' - ' + station.watersName : station.watersName}}</h5>
+      <h5 class="card-title">{{station.name.length > 2 ? station.watersName + ' - ' + station.name : station.watersName}}</h5>
       <div class="card-text" *ngFor="let stationAbility of station.stationAbilities">{{stationAbility.name}}: <b>{{stationAbility.measurements[0].value}} {{stationAbility.unit}}</b></div>
       <button (click)="onDetail(station)" class="btn bg-info btn-sm mt-3">Details</button>
       <div class="custom-icon">

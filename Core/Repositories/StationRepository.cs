@@ -25,6 +25,7 @@ public class StationRepository : IStationRepository
         var stations = await _context.Stations
             .Include(s => s.CantonStations)
             .ThenInclude(cs => cs.Canton)
+            .OrderBy(s => s.WatersName)
             .AsNoTracking()
             .ToListAsync();
         return _mapper.Map<List<StationDto>>(stations);
@@ -57,7 +58,9 @@ public class StationRepository : IStationRepository
                 .OrderByDescending(m => m.MeasurementTime).Take(1))
             .Include(s => s.CantonStations)
             .ThenInclude(cs => cs.Canton)
+            .OrderBy(s => s.WatersName)
             .AsNoTracking()
+            .AsSplitQuery()
             .ToListAsync();
         return _mapper.Map<List<StationDto>>(stations);
     }
@@ -70,7 +73,9 @@ public class StationRepository : IStationRepository
             .ThenInclude(sa => sa.Measurements
                 .OrderByDescending(m => m.MeasurementTime)
                 .Where(m => m.MeasurementTime >= _currentDate.AddDays(- dayIncluded)))
+            .OrderBy(s => s.WatersName)
             .AsNoTracking()
+            .AsSplitQuery()
             .FirstOrDefaultAsync(s => s.Id.ToString() == stationId);
         return station == null ? null : _mapper.Map<StationDto>(station);
     }
@@ -84,6 +89,8 @@ public class StationRepository : IStationRepository
                 .OrderByDescending(m => m.MeasurementTime)
                 .Where(m => m.MeasurementTime >= _currentDate.AddDays(-dayIncluded)))
             .AsNoTracking()
+            .AsSplitQuery()
+            .OrderBy(s => s.WatersName)
             .Where(s => s.CantonStations.Any(cs => cs.Canton.Name.Equals(cantonName)))
             .ToListAsync();
         return _mapper.Map<List<StationDto>>(stations);
@@ -97,7 +104,9 @@ public class StationRepository : IStationRepository
             .ThenInclude(sa => sa.Measurements
                 .OrderByDescending(m => m.MeasurementTime)
                 .Where(m => m.MeasurementTime >= _currentDate.AddDays(-dayIncluded)))
+            .OrderBy(s => s.WatersName)
             .AsNoTracking()
+            .AsSplitQuery()
             .Where(s => s.CantonStations.Any(cs => cs.Canton.Code.Equals(cantonCode)))
             .ToListAsync();
         return _mapper.Map<List<StationDto>>(stations);
