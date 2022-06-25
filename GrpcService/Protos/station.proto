@@ -3,15 +3,37 @@ syntax = "proto3";
 option csharp_namespace = "GrpcService.Protos";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 package station;
 
 service StationService {
-	rpc GetAllWaters (GetEmptyRequest) returns (stream StationsModel) {}
+	rpc GetLatestMeasurements (GetEmptyRequest) returns (stream StationsModel);
+
+	rpc GetStationById (GetStationRequest) returns (StationsModel);
+
+	rpc GetStationsByCantonCode (GetStationByCantonCodeRequest) returns (stream StationsModel);
+
+	rpc GetStationsByCantonName (GetStationByCantonNameRequest) returns (stream StationsModel);
 }
 
 message GetEmptyRequest {
 
+}
+
+message GetStationByCantonNameRequest {
+	string cantonName = 1;
+	google.protobuf.Int32Value dayIncluded = 2;
+}
+
+message GetStationByCantonCodeRequest {
+	string cantonCode = 1;
+	google.protobuf.Int32Value dayIncluded = 2;
+}
+
+message GetStationRequest {
+	string id = 1;
+	google.protobuf.Int32Value dayIncluded = 2;
 }
 
 message StationsModel {
@@ -37,7 +59,7 @@ message MeasurementModel {
 	string stationAbilityId = 2;
 	google.protobuf.Timestamp measurementTime = 3;
 	double value = 4;
-	double max24H = 5;
-	double min24H = 6;
-	double mean24H = 7;
+	google.protobuf.DoubleValue max24H = 5;
+	google.protobuf.DoubleValue min24H = 6;
+	google.protobuf.DoubleValue mean24H = 7;
 }

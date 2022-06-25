@@ -13,9 +13,9 @@ public class CustomStationMapper : ICustomStationMapper
                 {
                     Id = measurement.Id.ToString(),
                     Value = (double) measurement.Value,
-                    Max24H = (double) measurement.Max24H,
-                    Min24H = (double) measurement.Min24H,
-                    Mean24H = (double) measurement.Mean24H,
+                    Max24H = measurement.Max24H.HasValue ? (double) measurement.Max24H : null,
+                    Min24H = measurement.Min24H.HasValue ? (double) measurement.Min24H : null,
+                    Mean24H = measurement.Mean24H.HasValue ? (double) measurement.Mean24H : null,
                     StationAbilityId = measurement.StationAbilityId.ToString(),
                     MeasurementTime = Timestamp.FromDateTimeOffset(measurement.MeasurementTime)
                 })
