@@ -30,7 +30,7 @@ try
 
     builder.Services.AddDbContext<SwissWatersContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("SwissWatersConnection"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("SwissWatersConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(1800000));
     });
 
     builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
